@@ -17,6 +17,7 @@ namespace ConsoleNetCore
             var deserialized = JsonConvert.DeserializeObject<TestClass>(str);
             var msg = toSerialize.Color == deserialized.Color ? "Everything works fine! Gratz!" : "Colors are different";
             Console.WriteLine(msg);
+            Console.ReadKey();
         }
     }
 }
