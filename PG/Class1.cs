@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Drawing;
 
 namespace PG
 {
-    public class Class1
+    public class TestClass
     {
+        public Color Color { get; set; }
     }
 }

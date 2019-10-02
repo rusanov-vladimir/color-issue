@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Drawing;
 using Android.App;
 using Android.OS;
 using Android.Runtime;
@@ -6,6 +8,7 @@ using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using Newtonsoft.Json;
 
 namespace PG.Droid
 {
@@ -45,8 +48,14 @@ namespace PG.Droid
 
         private void FabOnClick(object sender, EventArgs eventArgs)
         {
-            View view = (View) sender;
-            Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
+            var typeConverter = TypeDescriptor.GetConverter(typeof(Color));
+            var clr = (Color)typeConverter.ConvertFromString("#FFAAEE");
+            var toSerialize = new TestClass { Color = clr };
+            var str = JsonConvert.SerializeObject(toSerialize);
+            var deserialized = JsonConvert.DeserializeObject<TestClass>(str);
+            var msg = toSerialize.Color == deserialized.Color ? "Everything works fine! Gratz!" : "Colors are different";
+            View view = (View)sender;
+            Snackbar.Make(view, msg, Snackbar.LengthLong)
                 .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -55,6 +64,8 @@ namespace PG.Droid
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-	}
+    }
+
+
 }
 
